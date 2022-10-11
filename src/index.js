@@ -48,15 +48,18 @@ function createMarkup(countries) {
       <img class = "header-img" src="${flags.svg}" alt="${
           name.common
         }"><h2 class="header-title">${name.official}</h2></div>
-        <ul class="countru-list">
-      <li class="countru-item">Capitel: ${capital}</li>
-      <li class="countru-item">Population: ${population}</li>
-      <li class="countru-item">Languages: ${Object.values(languages)}</li></ul>
+        <ul class="country-list">
+      <li class="country-item">Capitel: <span class="country-value">${capital}</span></li>
+      <li class="country-item">Population: <span class="country-value">${population}</span></li>
+      <li class="country-item">Languages: <span class="country-value">${Object.values(
+        languages
+      )}</span></li></ul>
     `;
       })
       .join('');
+
+    refs.countryInfo.innerHTML = markup;
   }
-  refs.countryList.innerHTML = markup;
 }
 
 function resetMarkup() {
