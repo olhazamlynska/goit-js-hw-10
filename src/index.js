@@ -1,7 +1,7 @@
 import './css/styles.css';
+import { fetchCountries } from './js/fetchCountries';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { fetchCountries } from './js/fetchCountries';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -10,9 +10,6 @@ const refs = {
   countryList: document.querySelector('.country-list'),
   countryInfo: document.querySelector('.country-info'),
 };
-console.log(refs.input);
-console.log(refs.list);
-console.log(refs.info);
 
 refs.input.addEventListener('input', debounce(handleSearch, DEBOUNCE_DELAY));
 
@@ -26,12 +23,9 @@ function handleSearch(event) {
   }
 
   fetchCountries(counrtyName)
-    .then(countries => {
-      createMarkup(countries);
-    })
+    .then(countries => createMarkup(countries))
     .catch(error => {
       Notify.failure('Oops, there is no country with that name');
-      console.log(error);
     });
 }
 
@@ -39,7 +33,7 @@ function createMarkup(countries) {
   if (countries.length > 10) {
     Notify.info('Too many matches found. Please enter a more specific name.');
     return;
-  } else if (countries.length > 2 && countries.length < 10) {
+  } else if (countries.length > 1) {
     const markup = countries
       .map(({ name, flags }) => {
         return /*html*/ `<li class = "countries-item"><img class = "countries-img" src="${flags.svg}" alt="">${name.official}</li>`;
