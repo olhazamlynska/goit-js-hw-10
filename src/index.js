@@ -26,13 +26,13 @@ function handleSearch(event) {
     .then(countries => createMarkup(countries))
     .catch(error => {
       Notify.failure('Oops, there is no country with that name');
+      console.log(error);
     });
 }
 
 function createMarkup(countries) {
   if (countries.length > 10) {
     Notify.info('Too many matches found. Please enter a more specific name.');
-    return;
   } else if (countries.length > 1) {
     const markup = countries
       .map(({ name, flags }) => {
