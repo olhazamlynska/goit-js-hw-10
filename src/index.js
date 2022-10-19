@@ -13,7 +13,7 @@ const refs = {
 
 refs.input.addEventListener('input', debounce(handleSearch, DEBOUNCE_DELAY));
 
-function handleSearch(event) {
+async function handleSearch(event) {
   resetMarkup();
 
   const counrtyName = event.target.value.trim().toLowerCase();
@@ -21,13 +21,13 @@ function handleSearch(event) {
   if (counrtyName === '') {
     return;
   }
-
-  fetchCountries(counrtyName)
-    .then(countries => createMarkup(countries))
-    .catch(error => {
-      Notify.failure('Oops, there is no country with that name');
-      console.log(error);
-    });
+  try {
+    const data = await fetchCountries(counrtyName);
+    createMarkup(data);
+  } catch (error) {
+    Notify.failure('Oops, there is no country with that name');
+    console.log(error);
+  }
 }
 
 function createMarkup(countries) {
